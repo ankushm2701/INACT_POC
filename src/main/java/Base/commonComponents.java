@@ -8,10 +8,11 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import static org.testng.Assert.assertTrue;
 
 import java.util.concurrent.TimeUnit;
+
+import javax.swing.text.StyleConstants.CharacterConstants;
 
 public class commonComponents {
 
@@ -28,7 +29,7 @@ public class commonComponents {
                 options.addArguments("--disable-notifications");
                 capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 
-                System.setProperty("webdriver.chrome.driver", Constants.CHROME_DRIVER_EXE);
+                System.setProperty("webdriver.chrome.driver", CharacterConstants.CHROME_DRIVER_EXE);
                 driver=new ChromeDriver(options);
             } catch (Exception e){
                 System.out.println("Exception in Chrome Browser");
@@ -41,7 +42,7 @@ public class commonComponents {
         }
         
         
-        public static boolean clickButton(By locator)
+        public static boolean clickButton(By locator, WebDriver driver)
     	{
     		try
     		{
@@ -55,7 +56,7 @@ public class commonComponents {
     		}
     	}
         
-        public static void insertText(By locator, String value)
+        public static void insertText(By locator, String value, WebDriver driver)
     	{
     		try {
     			driver.findElement(locator).sendKeys(value);
@@ -66,7 +67,7 @@ public class commonComponents {
     		}
     	}
         
-        public static boolean waitForElementVisible(By locator,long timeOut) //Wait method for Element visibility 
+        public static boolean waitForElementVisible(By locator,long timeOut,WebDriver driver) //Wait method for Element visibility 
     	{
     		try
     		{
@@ -84,7 +85,25 @@ public class commonComponents {
     	}
         
         
-        public static boolean AssertContains(By locator, String ExpectedValue) 
+        public static boolean clickLink(By locator, WebDriver driver) 
+    	{
+    		try
+    		{
+    			bStatus = commonComponents.waitForElementVisible(locator, 30, driver);
+    			if(bStatus)
+    				driver.findElement(locator).click();
+    			else
+    				return false;
+    			return true;
+    		}
+    		catch(Exception ex)
+    		{
+    			return false;
+
+    		}
+    	}
+        
+        public static boolean AssertContains(By locator, String ExpectedValue, WebDriver driver) 
   	  {
   		  try
   		  {
