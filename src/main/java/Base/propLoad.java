@@ -1,41 +1,41 @@
 package Base;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.Set;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration.PropertiesConfigurationLayout;
 
 public class propLoad {
 	
-	 InputStream inputStream;
-	 Properties prop ;
-	 
-	 public void load() throws IOException {
+    InputStream inputStream;
+	Properties prop ;
+	PropertiesConfiguration config = null;
+	public void load() throws IOException {
+		 String propFileName = "config.properties";
 	     try {
-		     prop = new Properties();
-			 String propFileName = "config.properties";
-			 inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
-	         if(inputStream != null) {
-			     prop.load(inputStream);
-			 } 
-	         else {
-			     throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
-			 }
-			     System.out.println(prop.getProperty("Cookies_Alert"));
-		 }
-		 catch (Exception e) {
-		     System.out.println("Exception: " + e);
-		} 
-	     finally {
-		     inputStream.close();
-		}		
-			
-     }
+	 	     config = new PropertiesConfiguration(propFileName);
+	 		 } 
+	     catch (ConfigurationException e)
+	     {
+	         e.printStackTrace();
+	 	 }
+	     PropertiesConfigurationLayout layout = config.getLayout();
+	     Set<String> keys = layout.getKeys();
+	 	for (String key: keys) {
+	 	    String[] arrOfStr= layout.getConfiguration().getProperty(key).toString().split(";");
+	 		for (String a : arrOfStr) 
+	 	        System.out.println(a); 
+	 			//break;
+	 	}
+    }
 	
-	  public static void main(String[] args) throws IOException {
-	     propLoad prop = new propLoad();
-	     prop.load();	
-	   }
+    public static void main(String[] args) throws IOException {
+	    propLoad prop = new propLoad();
+	    prop.load();	
+	}
 }
 
 
