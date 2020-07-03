@@ -1,4 +1,7 @@
 package Base;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration.PropertiesConfigurationLayout;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,6 +13,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import static org.testng.Assert.assertTrue;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.text.StyleConstants.CharacterConstants;
@@ -20,8 +27,10 @@ public class commonComponents {
         public static WebElement element;
     	public static WebDriverWait wait;
     	public static boolean bStatus;
-
-        public void launchBrowser(String url){
+		public static PropertiesConfiguration config = null;
+		public static List<String> propertyValue= new ArrayList<>();
+		public static  String xpath;
+        public static void launchBrowser(String url){
             try {
                 DesiredCapabilities capabilities= DesiredCapabilities.chrome();
                 ChromeOptions options=new ChromeOptions();
@@ -29,7 +38,7 @@ public class commonComponents {
                 options.addArguments("--disable-notifications");
                 capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 
-                System.setProperty("webdriver.chrome.driver", CharacterConstants.CHROME_DRIVER_EXE);
+                System.setProperty("webdriver.chrome.driver", Constants.CHROME_DRIVER_EXE);
                 driver=new ChromeDriver(options);
             } catch (Exception e){
                 System.out.println("Exception in Chrome Browser");
@@ -42,24 +51,24 @@ public class commonComponents {
         }
         
         
-        public static boolean clickButton(By locator, WebDriver driver)
+        public static boolean clickButton(String xpath)
     	{
     		try
     		{
-    		driver.findElement(locator).click();
-    		return true;
+    			driver.findElement(By.xpath(xpath)).click();
+    			return true;
     		}
     		catch(Exception ex)
     		{
     			return false;
-    			
     		}
     	}
         
-        public static void insertText(By locator, String value, WebDriver driver)
+        public static void insertText(String xpath, String value)
     	{
     		try {
-    			driver.findElement(locator).sendKeys(value);
+				driver.findElement(By.xpath(xpath)).clear();
+    			driver.findElement(By.xpath(xpath)).sendKeys(value);
     		}
     		catch (Exception e) 
     		{
@@ -67,43 +76,34 @@ public class commonComponents {
     		}
     	}
         
-        public static boolean waitForElementVisible(By locator,long timeOut,WebDriver driver) //Wait method for Element visibility 
+        public static void waitForElementVisible(String element,long timeOut) //Wait method for Element visibility
     	{
     		try
     		{
     			wait = new WebDriverWait(driver, timeOut);
-    			element = wait.until(ExpectedConditions.elementToBeClickable(locator));
-    			if(element!=null)
-    				return true;
-    			else
-    				return false;
+    			wait.until(ExpectedConditions.elementToBeClickable(By.xpath(element)));
     		}
     		catch(Exception e)
     		{
-    			return false;
+    			System.out.println(e.getMessage());
     		}
     	}
         
         
-        public static boolean clickLink(By locator, WebDriver driver) 
+        public static void clickLink(String xpath)
     	{
     		try
     		{
-    			bStatus = commonComponents.waitForElementVisible(locator, 30, driver);
-    			if(bStatus)
-    				driver.findElement(locator).click();
-    			else
-    				return false;
-    			return true;
+    			commonComponents.waitForElementVisible(xpath, 30);
+    			driver.findElement(By.xpath(xpath)).click();
     		}
     		catch(Exception ex)
     		{
-    			return false;
-
+    			System.out.println(ex);
     		}
     	}
         
-        public static boolean AssertContains(By locator, String ExpectedValue, WebDriver driver) 
+        public static boolean AssertContains(By locator, String ExpectedValue)
   	  {
   		  try
   		  {
@@ -117,5 +117,26 @@ public class commonComponents {
   			  return false;
   		  }
   	  }
+
+	public static List<String> propertyFileReader() throws IOException {
+		String propFileName = "config.properties";
+		try {
+			config = new PropertiesConfiguration(propFileName);
+		}
+		catch (ConfigurationException e)
+		{
+			e.printStackTrace();
+		}
+		PropertiesConfigurationLayout layout = config.getLayout();
+		Set<String> keys = layout.getKeys();
+		for (String key: keys) {
+			String[] arrOfStr= layout.getConfiguration().getProperty(key).toString().split(";");
+			for (String a : arrOfStr)
+			{
+				propertyValue.add(a);
+			}
+		}
+		return propertyValue;
+	}
 }
 

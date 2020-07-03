@@ -1,40 +1,32 @@
 package Base;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-import java.util.Set;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.configuration.PropertiesConfigurationLayout;
+import java.util.List;
 
-public class propLoad {
-	
-    InputStream inputStream;
-	Properties prop ;
-	PropertiesConfiguration config = null;
-	public void load() throws IOException {
-		 String propFileName = "config.properties";
-	     try {
-	 	     config = new PropertiesConfiguration(propFileName);
-	 		 } 
-	     catch (ConfigurationException e)
-	     {
-	         e.printStackTrace();
-	 	 }
-	     PropertiesConfigurationLayout layout = config.getLayout();
-	     Set<String> keys = layout.getKeys();
-	 	for (String key: keys) {
-	 	    String[] arrOfStr= layout.getConfiguration().getProperty(key).toString().split(";");
-	 		for (String a : arrOfStr) 
-	 	        System.out.println(a); 
-	 			//break;
-	 	}
-    }
-	
+import org.apache.commons.lang.StringUtils;
+
+public class propLoad extends commonComponents {
+
     public static void main(String[] args) throws IOException {
-	    propLoad prop = new propLoad();
-	    prop.load();	
+    	List<String> propertyValue = propertyFileReader();
+		String url="https://spartacus.c39j2-walkersde1-d4-public.model-t.cc.commerce.ondemand.com/electronics-spa/en/USD";
+	    launchBrowser(url);
+	    for(int i=0; i< propertyValue.size(); i++)
+		{
+			xpath= StringUtils.EMPTY;
+			if(propertyValue.get(i).toLowerCase().equals("click"))
+			{
+				xpath= propertyValue.get(i-1);
+				clickButton(xpath);
+			}
+			else if(propertyValue.get(i).toLowerCase().equals("sendkeys"))
+			{
+				String value= StringUtils.EMPTY;
+				xpath= propertyValue.get(i-1);
+				value= propertyValue.get(i+1);
+				insertText(xpath, value);
+			}
+		}
 	}
 }
 
