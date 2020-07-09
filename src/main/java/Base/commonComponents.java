@@ -12,23 +12,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import static org.testng.Assert.assertTrue;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.text.StyleConstants.CharacterConstants;
-
-public class commonComponents {
+public class commonComponents extends Constants {
 
         public static WebDriver driver;
         public static WebElement element;
     	public static WebDriverWait wait;
     	public static boolean bStatus;
 		public static PropertiesConfiguration config = null;
-		public static List<String> propertyValue= new ArrayList<>();
+	    public static Map<String, String> value= new LinkedHashMap<>();
 		public static  String xpath;
         public static void launchBrowser(String url){
             try {
@@ -118,8 +113,8 @@ public class commonComponents {
   		  }
   	  }
 
-	public static List<String> propertyFileReader() throws IOException {
-		String propFileName = "config.properties";
+	public static PropertiesConfigurationLayout propertyFileReader() throws IOException {
+		String propFileName = Constants.Property_File;
 		try {
 			config = new PropertiesConfiguration(propFileName);
 		}
@@ -128,15 +123,27 @@ public class commonComponents {
 			e.printStackTrace();
 		}
 		PropertiesConfigurationLayout layout = config.getLayout();
+		return config.getLayout();
+	}
+
+	public static void performAction(PropertiesConfigurationLayout layout)
+	{
 		Set<String> keys = layout.getKeys();
 		for (String key: keys) {
-			String[] arrOfStr= layout.getConfiguration().getProperty(key).toString().split(";");
-			for (String a : arrOfStr)
-			{
-				propertyValue.add(a);
+			String[] arrOfStr = layout.getConfiguration().getProperty(key).toString().split(";");
+			for (int i = 0; i < arrOfStr.length; i++) {
+				String[] data = arrOfStr[i].split("\\|");
+				value.put(data[0].toLowerCase().trim(), data[1].trim());
+			}
+			switch (value.get(Action).toLowerCase()) {
+				case Click:
+					clickButton(value.get(Xpath));
+					break;
+				case EnterText:
+					insertText(value.get(Xpath), value.get(Data));
+					break;
 			}
 		}
-		return propertyValue;
 	}
 }
 

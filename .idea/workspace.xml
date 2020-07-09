@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a1295fe-c234-4ad2-bda4-a1c17fc092ce" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Base/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Base/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Base/commonComponents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Base/commonComponents.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Base/propLoad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Base/propLoad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/chromedriver.exe" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/chromedriver.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Base/Constants.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Base/Constants.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Base/commonComponents.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Base/commonComponents.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -148,17 +148,12 @@
           <line>9</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Base/propLoad.java</url>
-          <line>10</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Base/commonComponents.java</url>
-          <line>138</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="value" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
