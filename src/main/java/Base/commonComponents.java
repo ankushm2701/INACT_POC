@@ -144,7 +144,7 @@ public class commonComponents extends Constants {
 					clickButton(value.get(Xpath));
 					Thread.sleep(5000);
 					break;
-				case EnterText:
+				case InsertText:
 					insertText(value.get(Xpath), value.get(Data));
 					Thread.sleep(5000);
 					break;

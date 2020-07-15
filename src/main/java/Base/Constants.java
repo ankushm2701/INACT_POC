@@ -14,7 +14,7 @@ public class Constants {
     public static final String Action= "action";
     public static final String Xpath= "xpath";
     public static final String Click= "click";
-    public static final String EnterText= "textbox";
+    public static final String InsertText= "inserttext";
     public static final String Data= "data";
 
     /*enum Actions {
