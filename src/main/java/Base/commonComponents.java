@@ -115,7 +115,7 @@ public class commonComponents extends Constants {
   		  }
   	  }
 
-	public static  void propertyFileReader() throws IOException {
+	public static  void propertyFileReader() throws IOException, InterruptedException {
 		File file = new File(Constants.FILE_PATH);
         File[] files = file.listFiles();
         for(File f: files){
@@ -130,7 +130,7 @@ public class commonComponents extends Constants {
         }
 	}
 
-	public static void performAction(PropertiesConfigurationLayout layout)
+	public static void performAction(PropertiesConfigurationLayout layout) throws InterruptedException
 	{
 		Set<String> keys = layout.getKeys();
 		for (String key: keys) {
@@ -142,9 +142,11 @@ public class commonComponents extends Constants {
 			switch (value.get(Action).toLowerCase()) {
 				case Click:
 					clickButton(value.get(Xpath));
+					Thread.sleep(5000);
 					break;
 				case EnterText:
 					insertText(value.get(Xpath), value.get(Data));
+					Thread.sleep(5000);
 					break;
 			}
 		}

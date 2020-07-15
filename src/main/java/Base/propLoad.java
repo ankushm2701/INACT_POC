@@ -6,7 +6,7 @@ import java.io.IOException;
 public class propLoad extends commonComponents {
 	
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 		launchBrowser(Constants.URL);
 		propertyFileReader();
 		
