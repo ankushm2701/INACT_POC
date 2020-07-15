@@ -142,11 +142,9 @@ public class commonComponents extends Constants {
 			switch (value.get(Action).toLowerCase()) {
 				case Click:
 					clickButton(value.get(Xpath));
-					Thread.sleep(5000);
 					break;
 				case InsertText:
 					insertText(value.get(Xpath), value.get(Data));
-					Thread.sleep(5000);
 					break;
 			}
 		}
