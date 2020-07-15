@@ -12,6 +12,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import static org.testng.Assert.assertTrue;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -113,17 +115,19 @@ public class commonComponents extends Constants {
   		  }
   	  }
 
-	public static PropertiesConfigurationLayout propertyFileReader() throws IOException {
-		String propFileName = Constants.Property_File;
-		try {
-			config = new PropertiesConfiguration(propFileName);
-		}
-		catch (ConfigurationException e)
-		{
-			e.printStackTrace();
-		}
-		PropertiesConfigurationLayout layout = config.getLayout();
-		return config.getLayout();
+	public static  void propertyFileReader() throws IOException {
+		File file = new File(Constants.FILE_PATH);
+        File[] files = file.listFiles();
+        for(File f: files){
+    		try {
+    			config = new PropertiesConfiguration(Constants.FILE_PATH+"/"+f.getName());
+    			performAction(config.getLayout());
+    		}
+    		catch (ConfigurationException e)
+    		{
+    			e.printStackTrace();
+    		}
+        }
 	}
 
 	public static void performAction(PropertiesConfigurationLayout layout)
