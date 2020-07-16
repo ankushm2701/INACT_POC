@@ -1,14 +1,18 @@
 package Base;
 
 import java.io.IOException;
+import java.util.Map;
 
 
 public class propLoad extends commonComponents {
 	
 
     public static void main(String[] args) throws IOException, InterruptedException {
-		launchBrowser(Constants.URL);
-		propertyFileReader();
+	 	launchBrowser(Constants.URL);
+    	 Map<String, String> propertiesData =  propertyFileReader();
+    	for (String key : propertiesData.keySet()) {
+    		System.out.println(key + "    " + propertiesData.get(key));
+    	 }
 		
 		
     	

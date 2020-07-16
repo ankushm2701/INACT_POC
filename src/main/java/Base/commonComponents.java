@@ -115,19 +115,27 @@ public class commonComponents extends Constants {
   		  }
   	  }
 
-	public static  void propertyFileReader() throws IOException, InterruptedException {
+	public static  Map<String, String> propertyFileReader() throws IOException, InterruptedException {
+		LinkedHashMap<String, String> propertiesData = new LinkedHashMap<String, String>();
 		File file = new File(Constants.FILE_PATH);
         File[] files = file.listFiles();
-        for(File f: files){
+          for(File f: files){
     		try {
     			config = new PropertiesConfiguration(Constants.FILE_PATH+"/"+f.getName());
-    			performAction(config.getLayout());
+    			Set<String> keys = config.getLayout().getKeys();
+    			for (String key: keys) {
+    			String value =	config.getLayout().getConfiguration().getProperty(key).toString();
+    			propertiesData.put(key, value);
+    				
+    			}
+    	
     		}
     		catch (ConfigurationException e)
     		{
     			e.printStackTrace();
     		}
         }
+        return propertiesData;
 	}
 
 	public static void performAction(PropertiesConfigurationLayout layout) throws InterruptedException
@@ -147,7 +155,7 @@ public class commonComponents extends Constants {
 					insertText(value.get(Xpath), value.get(Data));
 					break;
 			}
-		}
-	}
+		}  
+	}  
 }
 
