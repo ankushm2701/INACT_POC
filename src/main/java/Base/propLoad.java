@@ -8,12 +8,9 @@ public class propLoad extends commonComponents {
 	
 
     public static void main(String[] args) throws IOException, InterruptedException {
-	 	launchBrowser(Constants.URL);
-    	 Map<String, String> propertiesData =  propertyFileReader();
-    	for (String key : propertiesData.keySet()) {
-    		System.out.println(key + "    " + propertiesData.get(key));
-    	 }
-		
+	 	//launchBrowser(Constants.URL);
+    	 Map<String, Map<String, String>> propertiesData =  propertyFileReader();
+    	
 		
     	
     /*	ExcelFunctions excelCompnents = new ExcelFunctions();
