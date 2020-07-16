@@ -118,7 +118,7 @@ public class commonComponents extends Constants {
 	public static  LinkedHashMap<String, Map<String, String>> propertyFileReader() throws IOException, InterruptedException {
 		
 		LinkedHashMap<String, Map<String,String>> propertiesData = new LinkedHashMap<>();
-		LinkedHashMap<String, String> values= new LinkedHashMap<>();
+	
 		File file = new File(Constants.FILE_PATH);
         File[] files = file.listFiles();
           for(File f: files){
@@ -127,11 +127,14 @@ public class commonComponents extends Constants {
     			Set<String> keys = config.getLayout().getKeys();
     			for (String key: keys) {
     				String[] arrOfStr =	config.getLayout().getConfiguration().getProperty(key).toString().split(";");
+    				LinkedHashMap<String, String> values= new LinkedHashMap<>();
+    				
     				for (int i = 0; i < arrOfStr.length; i++) {
     					String[] data = arrOfStr[i].split("\\|");
     					values.put(data[0].toLowerCase().trim(), data[1].trim());
+    					 
     				}
-    			      propertiesData.put(key, values);
+    				propertiesData.put(key, values);
     				
     			}
     	
