@@ -12,8 +12,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import static org.testng.Assert.assertTrue;
-
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -25,8 +26,11 @@ public class commonComponents extends Constants {
     	public static WebDriverWait wait;
     	public static boolean bStatus;
 		public static PropertiesConfiguration config = null;
+		public static PropertiesConfiguration keyConfig = null;
+		
 	    public static Map<String, String> value= new LinkedHashMap<>();
 		public static  String xpath;
+		public static  String[] KeyWords ;
         public static void launchBrowser(String url){
             try {
                 DesiredCapabilities capabilities= DesiredCapabilities.chrome();
@@ -115,36 +119,24 @@ public class commonComponents extends Constants {
   		  }
   	  }
 
-	public static  LinkedHashMap<String, Map<String, String>> propertyFileReader() throws IOException, InterruptedException {
-		
-		LinkedHashMap<String, Map<String,String>> propertiesData = new LinkedHashMap<>();
-	
-		File file = new File(Constants.FILE_PATH);
-        File[] files = file.listFiles();
-          for(File f: files){
-    		try {
-    			config = new PropertiesConfiguration(Constants.FILE_PATH+"/"+f.getName());
-    			Set<String> keys = config.getLayout().getKeys();
-    			for (String key: keys) {
-    				String[] arrOfStr =	config.getLayout().getConfiguration().getProperty(key).toString().split(";");
-    				LinkedHashMap<String, String> values= new LinkedHashMap<>();
-    				
-    				for (int i = 0; i < arrOfStr.length; i++) {
-    					String[] data = arrOfStr[i].split("\\|");
-    					values.put(data[0].toLowerCase().trim(), data[1].trim());
-    					 
-    				}
-    				propertiesData.put(key, values);
-    				
-    			}
-    	
-    		}
-    		catch (ConfigurationException e)
-    		{
-    			e.printStackTrace();
-    		}
+	public static  void propertyFileReader() throws IOException, InterruptedException, ConfigurationException {
+		BufferedReader br = null;
+        String line ="";
+        String cvsSplitBy = ";";
+
+        try {
+            br = new BufferedReader(new FileReader(Constants.KEY_WORDS));
+            while ((line = br.readLine()) != null) {
+            KeyWords = line.split(cvsSplitBy);
+            for (String fileName : KeyWords) {
+      			config = new PropertiesConfiguration(Constants.FILE_PATH+"/"+fileName+".properties");
+      			performAction(config.getLayout());
+            }
+            }
+
+         } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        return propertiesData;
 	}
 
 	public static void performAction(PropertiesConfigurationLayout layout) throws InterruptedException
