@@ -4,7 +4,6 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.PropertiesConfigurationLayout;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -12,23 +11,16 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import static org.testng.Assert.assertTrue;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import Base.EnumActions.*;
 
 public class commonComponents extends Constants {
 
         public static WebDriver driver;
-        public static WebElement element;
-    	public static WebDriverWait wait;
-    	public static boolean bStatus;
 		public static PropertiesConfiguration config = null;
-		public static PropertiesConfiguration keyConfig = null;
-		
-	    public static Map<String, String> value= new LinkedHashMap<>();
+		public static PropertiesConfigurationLayout keyConfig = null;
+
 		public static  String xpath;
 		public static  String[] KeyWords ;
         public static void launchBrowser(String url){
@@ -52,24 +44,36 @@ public class commonComponents extends Constants {
         }
         
         
-        public static boolean clickButton(String xpath)
+        public static void clickButton(LocatorType locatorType, String element)
     	{
-    		try
-    		{
-    			driver.findElement(By.xpath(xpath)).click();
-    			return true;
-    		}
-    		catch(Exception ex)
-    		{
-    			return false;
-    		}
+				switch (locatorType) {
+					case Xpath:
+						waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.Xpath, element, "");
+						driver.findElement(By.xpath(element)).click();
+						break;
+					case CssSelector:
+						waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.CssSelector, element, "");
+						driver.findElement(By.cssSelector(element)).click();
+						break;
+				}
+
     	}
         
-        public static void insertText(String xpath, String value)
+        public static void insertText(LocatorType locatorType, String element, String value)
     	{
     		try {
-				driver.findElement(By.xpath(xpath)).clear();
-    			driver.findElement(By.xpath(xpath)).sendKeys(value);
+    			switch (locatorType) {
+					case Xpath:
+					waitUntilCondition(10, EnumActions.ExpectedElementCondition.VisibilityOfElement, LocatorType.Xpath, element, "");
+					driver.findElement(By.xpath(element)).clear();
+					driver.findElement(By.xpath(element)).sendKeys(value);
+					break;
+					case CssSelector:
+					waitUntilCondition(10, EnumActions.ExpectedElementCondition.VisibilityOfElement, LocatorType.CssSelector, element, "");
+					driver.findElement(By.cssSelector(element)).clear();
+					driver.findElement(By.cssSelector(element)).sendKeys(value);
+					break;
+				}
     		}
     		catch (Exception e) 
     		{
@@ -77,26 +81,20 @@ public class commonComponents extends Constants {
     		}
     	}
         
-        public static void waitForElementVisible(String element,long timeOut) //Wait method for Element visibility
+        public static void clickLink(LocatorType locatorType, String element)
     	{
     		try
     		{
-    			wait = new WebDriverWait(driver, timeOut);
-    			wait.until(ExpectedConditions.elementToBeClickable(By.xpath(element)));
-    		}
-    		catch(Exception e)
-    		{
-    			System.out.println(e.getMessage());
-    		}
-    	}
-        
-        
-        public static void clickLink(String xpath)
-    	{
-    		try
-    		{
-    			commonComponents.waitForElementVisible(xpath, 30);
-    			driver.findElement(By.xpath(xpath)).click();
+    			switch (locatorType) {
+					case Xpath:
+						waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.Xpath, element, "");
+						driver.findElement(By.xpath(element)).click();
+						break;
+					case CssSelector:
+						waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.CssSelector, element, "");
+						driver.findElement(By.cssSelector(element)).click();
+						break;
+				}
     		}
     		catch(Exception ex)
     		{
@@ -119,44 +117,97 @@ public class commonComponents extends Constants {
   		  }
   	  }
 
-	public static  void propertyFileReader() throws IOException, InterruptedException, ConfigurationException {
-		BufferedReader br = null;
-        String line ="";
-        String cvsSplitBy = ";";
-
-        try {
-            br = new BufferedReader(new FileReader(Constants.KEY_WORDS));
-            while ((line = br.readLine()) != null) {
-            KeyWords = line.split(cvsSplitBy);
-            for (String fileName : KeyWords) {
-      			config = new PropertiesConfiguration(Constants.FILE_PATH+"/"+fileName+".properties");
-      			performAction(config.getLayout());
-            }
-            }
-
-         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+	public static  void propertyFileReader() throws InterruptedException, ConfigurationException {
+		keyConfig = new PropertiesConfiguration(Constants.FILE_PATH+"/Keyword.properties").getLayout();
+		Set<String> keys = keyConfig.getKeys();
+		for(String key : keys) {
+			KeyWords = keyConfig.getConfiguration().getProperty(key).toString().split(";");
+			for (String fileName : KeyWords) {
+				config = new PropertiesConfiguration(Constants.FILE_PATH + "/" + fileName + ".properties");
+				requiredActionToPerform(config.getLayout());
+			}
+		}
 	}
 
-	public static void performAction(PropertiesConfigurationLayout layout) throws InterruptedException
+	public static void requiredActionToPerform(PropertiesConfigurationLayout layout) throws InterruptedException
 	{
 		Set<String> keys = layout.getKeys();
 		for (String key: keys) {
 			String[] arrOfStr = layout.getConfiguration().getProperty(key).toString().split(";");
+			Map<String, String> value= new LinkedHashMap<>();
 			for (int i = 0; i < arrOfStr.length; i++) {
 				String[] data = arrOfStr[i].split("\\|");
 				value.put(data[0].toLowerCase().trim(), data[1].trim());
 			}
-			switch (value.get(Action).toLowerCase()) {
-				case Click:
-					clickButton(value.get(Xpath));
-					break;
-				case InsertText:
-					insertText(value.get(Xpath), value.get(Data));
-					break;
+			if(value.containsKey(URL)) {
+				launchBrowser(value.get(URL));
+			}
+			else {
+				switch (value.get(Action).toLowerCase()) {
+					case Click:
+						clickButton(LocatorType.Xpath, value.get(Xpath));
+						break;
+					case InsertText:
+						insertText(LocatorType.Xpath, value.get(Xpath), value.get(Data));
+						break;
+				}
 			}
 		}  
-	}  
+	}
+
+	public static void performAction() {
+		try {
+			propertyFileReader();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void waitUntilCondition(int second, ExpectedElementCondition expectedCondition, LocatorType findElementBy, String element, String text){
+		WebDriverWait wait=new WebDriverWait(driver, second);
+		switch (expectedCondition){
+			case ElementToBeSelected:
+				if(LocatorType.Id == findElementBy)
+					wait.until(ExpectedConditions.elementToBeSelected(By.id(element)));
+				else if(LocatorType.CssSelector == findElementBy)
+					wait.until(ExpectedConditions.elementToBeSelected(By.cssSelector(element)));
+				else if(LocatorType.Xpath == findElementBy)
+					wait.until(ExpectedConditions.elementToBeSelected(By.xpath(element)));
+				break;
+			case ElementToBeClickable:
+				if(LocatorType.Id == findElementBy)
+					wait.until(ExpectedConditions.elementToBeClickable(By.id(element)));
+				else if(LocatorType.CssSelector == findElementBy)
+					wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(element)));
+				else if(LocatorType.Xpath == findElementBy)
+					wait.until(ExpectedConditions.elementToBeClickable(By.xpath(element)));
+				break;
+			case ElementSelectionStateToBe:
+				if(LocatorType.Id == findElementBy)
+					wait.until(ExpectedConditions.elementSelectionStateToBe(By.id(element),true));
+				else if(LocatorType.CssSelector == findElementBy)
+					wait.until(ExpectedConditions.elementSelectionStateToBe(By.cssSelector(element), true));
+				else if(LocatorType.Xpath == findElementBy)
+					wait.until(ExpectedConditions.elementSelectionStateToBe(By.xpath(element),true));
+				break;
+			case TextToBePresentInElementLocated:
+				if(LocatorType.Id == findElementBy)
+					wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id(element), text));
+				else if(LocatorType.CssSelector == findElementBy)
+					wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(element), text));
+				else if(LocatorType.Xpath == findElementBy)
+					wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath(element), text));
+				break;
+			case VisibilityOfElement:
+				if(LocatorType.Id == findElementBy)
+					wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(element)));
+				else if(LocatorType.CssSelector == findElementBy)
+					wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(element)));
+				else if(LocatorType.Xpath == findElementBy)
+					wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(element)));
+				break;
+		}
+	}
 }
 

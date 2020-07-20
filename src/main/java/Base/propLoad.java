@@ -10,10 +10,7 @@ public class propLoad extends commonComponents {
 	
 
     public static void main(String[] args) throws IOException, InterruptedException, ConfigurationException {
-	 	//launchBrowser(Constants.URL);
-    	launchBrowser(Constants.URL);
-		propertyFileReader();
-
+		performAction();
 		/*	ExcelFunctions excelCompnents = new ExcelFunctions();
     	Sheet ObjExcelSheet = 	excelCompnents.getExcelWorksheetObject(excelCompnents.getExcelWorkbookObject(), Constants.EXCEL_SHEET_NAME);
     	ArrayList<String> values =	excelCompnents.getExcelCellRowValues(excelCompnents.getExcelWorkbookObject(), ObjExcelSheet, "One");
@@ -22,7 +19,6 @@ public class propLoad extends commonComponents {
     		System.out.println(rowIterator.next());
     	}
     	*/
-    
 	}
 }
 
