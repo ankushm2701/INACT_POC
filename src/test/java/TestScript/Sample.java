@@ -13,6 +13,6 @@ public class Sample extends commonComponents {
     public void sampleTest() throws IOException, InterruptedException, ConfigurationException {
         String url="https://spartacus.c39j2-walkersde1-d4-public.model-t.cc.commerce.ondemand.com/electronics-spa/en/USD";
         launchBrowser(url);
-        propertyFileReader();
+        propertyFileReader("csv");
     }
 }

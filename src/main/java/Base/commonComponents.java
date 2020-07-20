@@ -11,6 +11,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import static org.testng.Assert.assertTrue;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import Base.EnumActions.*;
@@ -117,14 +121,28 @@ public class commonComponents extends Constants {
   		  }
   	  }
 
-	public static  void propertyFileReader() throws InterruptedException, ConfigurationException {
-		keyConfig = new PropertiesConfiguration(Constants.FILE_PATH+"/Keyword.properties").getLayout();
-		Set<String> keys = keyConfig.getKeys();
-		for(String key : keys) {
-			KeyWords = keyConfig.getConfiguration().getProperty(key).toString().split(";");
-			for (String fileName : KeyWords) {
-				config = new PropertiesConfiguration(Constants.FILE_PATH + "/" + fileName + ".properties");
-				requiredActionToPerform(config.getLayout());
+	public static  void propertyFileReader(String fileType) throws InterruptedException, ConfigurationException, IOException {
+		BufferedReader br = null;
+		String line ="";
+		String cvsSplitBy = ";";
+		if(fileType == "csv") {
+			br = new BufferedReader(new FileReader(Constants.KEY_WORDS));
+			while ((line = br.readLine()) != null) {
+				KeyWords = line.split(cvsSplitBy);
+				for (String fileName : KeyWords) {
+					config = new PropertiesConfiguration(Constants.FILE_PATH + "/" + fileName + ".properties");
+					requiredActionToPerform(config.getLayout());
+				}
+			}
+		}else {
+			keyConfig = new PropertiesConfiguration(Constants.FILE_PATH + "/Keyword.properties").getLayout();
+			Set<String> keys = keyConfig.getKeys();
+			for (String key : keys) {
+				KeyWords = keyConfig.getConfiguration().getProperty(key).toString().split(";");
+				for (String fileName : KeyWords) {
+					config = new PropertiesConfiguration(Constants.FILE_PATH + "/" + fileName + ".properties");
+					requiredActionToPerform(config.getLayout());
+				}
 			}
 		}
 	}
@@ -155,9 +173,9 @@ public class commonComponents extends Constants {
 		}  
 	}
 
-	public static void performAction() {
+	public static void performAction(String fileType) {
 		try {
-			propertyFileReader();
+			propertyFileReader(fileType);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
