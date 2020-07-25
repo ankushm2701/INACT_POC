@@ -18,13 +18,13 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import Base.EnumActions.*;
+import locator.locator.UILocator;
 
 public class commonComponents extends Constants {
 
         public static WebDriver driver;
 		public static PropertiesConfiguration config = null;
 		public static PropertiesConfigurationLayout keyConfig = null;
-
 		public static  String xpath;
 		public static  String[] KeyWords ;
         public static void launchBrowser(String url){
@@ -149,6 +149,8 @@ public class commonComponents extends Constants {
 
 	public static void requiredActionToPerform(PropertiesConfigurationLayout layout) throws InterruptedException
 	{
+		UILocator xpathFinder = new UILocator();
+		String xPathvalue = null;
 		Set<String> keys = layout.getKeys();
 		for (String key: keys) {
 			String[] arrOfStr = layout.getConfiguration().getProperty(key).toString().split(";");
@@ -161,9 +163,15 @@ public class commonComponents extends Constants {
 				launchBrowser(value.get(URL));
 			}
 			else {
+				try {
+					xPathvalue = xpathFinder.locatorGen_Xpath(driver, value.get("displaytext"), value.get("targetelement"));
+					}
+					 catch (Throwable e) {
+						e.printStackTrace();
+					}
 				switch (value.get(Action).toLowerCase()) {
 					case Click:
-						clickButton(LocatorType.Xpath, value.get(Xpath));
+						clickButton(LocatorType.Xpath, xPathvalue);
 						break;
 					case InsertText:
 						insertText(LocatorType.Xpath, value.get(Xpath), value.get(Data));
