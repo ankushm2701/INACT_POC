@@ -1,17 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results total="1" passed="1" failed="0" skipped="0">
+<testng-results total="1" passed="0" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2020-07-20T05:06:10Z" name="Suite" finished-at="2020-07-20T05:06:34Z" duration-ms="23828">
+  <suite started-at="2020-07-31T12:45:43Z" name="Default suite" finished-at="2020-07-31T12:47:15Z" duration-ms="92287">
     <groups>
     </groups>
-    <test started-at="2020-07-20T05:06:10Z" name="INTACT POC" finished-at="2020-07-20T05:06:34Z" duration-ms="23828">
+    <test started-at="2020-07-31T12:45:43Z" name="Default test" finished-at="2020-07-31T12:47:15Z" duration-ms="92287">
       <class name="TestScript.Sample">
-        <test-method signature="sampleTest()[pri:0, instance:TestScript.Sample@729d991e]" started-at="2020-07-20T10:36:10Z" name="sampleTest" finished-at="2020-07-20T10:36:34Z" duration-ms="23801" status="PASS">
+        <test-method is-config="true" signature="startTest()[pri:0, instance:TestScript.Sample@23c30a20]" started-at="2020-07-31T18:15:43Z" name="startTest" finished-at="2020-07-31T18:15:43Z" duration-ms="191" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startTest -->
+        <test-method signature="sampleTest()[pri:0, instance:TestScript.Sample@23c30a20]" started-at="2020-07-31T18:15:43Z" name="sampleTest" finished-at="2020-07-31T18:17:15Z" duration-ms="91849" status="FAIL">
+          <exception class="java.lang.IllegalArgumentException">
+            <message>
+              <![CDATA[Cannot find elements when the XPath is null.]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.IllegalArgumentException: Cannot find elements when the XPath is null.
+	at org.openqa.selenium.By$ByXPath.<init>(By.java:339)
+	at org.openqa.selenium.By.xpath(By.java:92)
+	at Base.commonComponents.waitUntilCondition(commonComponents.java:234)
+	at Base.commonComponents.clickButton(commonComponents.java:72)
+	at Base.commonComponents.requiredActionToPerform(commonComponents.java:198)
+	at Base.commonComponents.propertyFileReader(commonComponents.java:151)
+	at TestScript.Sample.sampleTest(Sample.java:16)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:639)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:821)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1131)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:124)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
+	at org.testng.TestRunner.privateRun(TestRunner.java:773)
+	at org.testng.TestRunner.run(TestRunner.java:623)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:357)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:352)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:310)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:259)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1185)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1110)
+	at org.testng.TestNG.run(TestNG.java:1018)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.IllegalArgumentException -->
           <reporter-output>
           </reporter-output>
         </test-method> <!-- sampleTest -->
+        <test-method is-config="true" signature="endTest()[pri:0, instance:TestScript.Sample@23c30a20]" started-at="2020-07-31T18:17:15Z" name="endTest" finished-at="2020-07-31T18:17:15Z" duration-ms="234" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- endTest -->
       </class> <!-- TestScript.Sample -->
-    </test> <!-- INTACT POC -->
-  </suite> <!-- Suite -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
 </testng-results>

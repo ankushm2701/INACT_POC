@@ -10,6 +10,13 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
 import static org.testng.Assert.assertTrue;
 
 import java.io.BufferedReader;
@@ -27,6 +34,16 @@ public class commonComponents extends Constants {
 		public static PropertiesConfigurationLayout keyConfig = null;
 		public static  String xpath;
 		public static  String[] KeyWords ;
+		static ExtentTest logger;
+		static ExtentReports report;
+		
+		@BeforeClass
+		public static void startTest()
+		{
+		report = new ExtentReports(System.getProperty("user.dir")+"\\ExtentReportResults.html");
+		logger = report.startTest("Intac");
+				}
+		
         public static void launchBrowser(String url){
             try {
                 DesiredCapabilities capabilities= DesiredCapabilities.chrome();
@@ -157,24 +174,31 @@ public class commonComponents extends Constants {
 			Map<String, String> value= new LinkedHashMap<>();
 			for (int i = 0; i < arrOfStr.length; i++) {
 				String[] data = arrOfStr[i].split("\\|");
+				//value.put(data[0].toLowerCase(),data[1]);
 				value.put(data[0].toLowerCase().trim(), data[1].trim());
+				logger.log(LogStatus.PASS,"Performing Actions", data[0]+"=="+data[1] );
 			}
 			if(value.containsKey(URL)) {
 				launchBrowser(value.get(URL));
 			}
 			else {
 				try {
+					if(value.containsKey("displaytext"))
 					xPathvalue = xpathFinder.locatorGen_Xpath(driver, value.get("displaytext"), value.get("targetelement"));
-					}
+					else if(value.containsKey("placeholder"))
+					xPathvalue = xpathFinder.generatexPathWithplaceHolder(driver, value.get("placeholder"));
+				}
 					 catch (Throwable e) {
 						e.printStackTrace();
 					}
+				System.out.println(xPathvalue);
+				
 				switch (value.get(Action).toLowerCase()) {
 					case Click:
 						clickButton(LocatorType.Xpath, xPathvalue);
 						break;
 					case InsertText:
-						insertText(LocatorType.Xpath, value.get(Xpath), value.get(Data));
+						insertText(LocatorType.Xpath, xPathvalue, value.get(Data));
 						break;
 				}
 			}
@@ -234,6 +258,14 @@ public class commonComponents extends Constants {
 					wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(element)));
 				break;
 		}
+	}
+	@AfterClass
+	public static void endTest()
+	{
+	report.endTest(logger);
+	report.flush();
+	
+
 	}
 }
 
