@@ -2,15 +2,13 @@ package Base;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.PropertiesConfigurationLayout;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -70,20 +68,35 @@ public class commonComponents extends Constants {
         
         public static void clickButton(LocatorType locatorType, String element)
     	{
+			JavascriptExecutor script=(JavascriptExecutor)driver;
 				switch (locatorType) {
 					case Xpath:
 						waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.Xpath, element, "");
-						driver.findElement(By.xpath(element)).sendKeys(Keys.ENTER);
-						//JavascriptExecutor script=(JavascriptExecutor)driver;
-						//script.executeScript("arguments[0].click();", element);
+						script.executeScript("arguments[0].click();", driver.findElement(By.xpath(element)));
 						break;
 					case CssSelector:
 						waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.CssSelector, element, "");
-						driver.findElement(By.cssSelector(element)).click();
+						script.executeScript("arguments[0].click();", driver.findElement(By.cssSelector(element)));
 						break;
 				}
-
     	}
+    	public static  void clickDropDown(LocatorType locatorType, String element)
+		{
+			JavascriptExecutor script=(JavascriptExecutor)driver;
+			Actions action = new Actions(driver);
+			switch (locatorType) {
+				case Xpath:
+					waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.Xpath, element, "");
+					script.executeScript("arguments[0].click();", driver.findElement(By.xpath(element)));
+					action.moveToElement(driver.findElement(By.xpath(element))).click(driver.findElement(By.xpath(element))).build().perform();
+					break;
+				case CssSelector:
+					waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.CssSelector, element, "");
+					script.executeScript("arguments[0].click();", driver.findElement(By.xpath(element)));
+					action.moveToElement(driver.findElement(By.xpath(element))).click(driver.findElement(By.xpath(element))).build().perform();
+					break;
+			}
+		}
         
         public static void insertText(LocatorType locatorType, String element, String value)
     	{
@@ -181,7 +194,7 @@ public class commonComponents extends Constants {
 				String[] data = arrOfStr[i].split("\\|");
 				//value.put(data[0].toLowerCase(),data[1]);
 				value.put(data[0].toLowerCase().trim(), data[1].trim());
-				logger.log(LogStatus.PASS,"Performing Actions", data[0]+"=="+data[1] );
+				//logger.log(LogStatus.PASS,"Performing Actions", data[0]+"=="+data[1] );
 			}
 			if(value.containsKey(URL)) {
 				launchBrowser(value.get(URL));
@@ -204,6 +217,9 @@ public class commonComponents extends Constants {
 						break;
 					case InsertText:
 						insertText(LocatorType.Xpath, xPathvalue, value.get(Data));
+						break;
+					case DropDown:
+						clickDropDown(LocatorType.Xpath, xPathvalue);
 						break;
 				}
 			}
