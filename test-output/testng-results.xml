@@ -2,28 +2,50 @@
 <testng-results total="1" passed="0" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2020-07-31T12:45:43Z" name="Default suite" finished-at="2020-07-31T12:47:15Z" duration-ms="92287">
+  <suite started-at="2020-08-12T10:15:36Z" name="Default suite" finished-at="2020-08-12T10:16:40Z" duration-ms="63837">
     <groups>
     </groups>
-    <test started-at="2020-07-31T12:45:43Z" name="Default test" finished-at="2020-07-31T12:47:15Z" duration-ms="92287">
+    <test started-at="2020-08-12T10:15:36Z" name="Default test" finished-at="2020-08-12T10:16:40Z" duration-ms="63837">
       <class name="TestScript.Sample">
-        <test-method is-config="true" signature="startTest()[pri:0, instance:TestScript.Sample@23c30a20]" started-at="2020-07-31T18:15:43Z" name="startTest" finished-at="2020-07-31T18:15:43Z" duration-ms="191" status="PASS">
+        <test-method is-config="true" signature="startTest()[pri:0, instance:TestScript.Sample@23c30a20]" started-at="2020-08-12T15:45:36Z" name="startTest" finished-at="2020-08-12T15:45:37Z" duration-ms="308" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- startTest -->
-        <test-method signature="sampleTest()[pri:0, instance:TestScript.Sample@23c30a20]" started-at="2020-07-31T18:15:43Z" name="sampleTest" finished-at="2020-07-31T18:17:15Z" duration-ms="91849" status="FAIL">
-          <exception class="java.lang.IllegalArgumentException">
+        <test-method signature="sampleTest()[pri:0, instance:TestScript.Sample@23c30a20]" started-at="2020-08-12T15:45:37Z" name="sampleTest" finished-at="2020-08-12T15:46:40Z" duration-ms="63058" status="FAIL">
+          <exception class="org.openqa.selenium.ElementNotInteractableException">
             <message>
-              <![CDATA[Cannot find elements when the XPath is null.]]>
+              <![CDATA[element not interactable
+  (Session info: chrome=83.0.4103.61)
+Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
+System info: host: 'USHYDBPRASH09', ip: '192.168.1.67', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '13.0.2'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.61, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: C:\Users\BPRASH~1\AppData\L...}, goog:chromeOptions: {debuggerAddress: localhost:58708}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: a2a4cbf0ae23a904f1b9575c85fb0b27]]>
             </message>
             <full-stacktrace>
-              <![CDATA[java.lang.IllegalArgumentException: Cannot find elements when the XPath is null.
-	at org.openqa.selenium.By$ByXPath.<init>(By.java:339)
-	at org.openqa.selenium.By.xpath(By.java:92)
-	at Base.commonComponents.waitUntilCondition(commonComponents.java:234)
-	at Base.commonComponents.clickButton(commonComponents.java:72)
-	at Base.commonComponents.requiredActionToPerform(commonComponents.java:198)
-	at Base.commonComponents.propertyFileReader(commonComponents.java:151)
+              <![CDATA[org.openqa.selenium.ElementNotInteractableException: element not interactable
+  (Session info: chrome=83.0.4103.61)
+Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
+System info: host: 'USHYDBPRASH09', ip: '192.168.1.67', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '13.0.2'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.61, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: C:\Users\BPRASH~1\AppData\L...}, goog:chromeOptions: {debuggerAddress: localhost:58708}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: a2a4cbf0ae23a904f1b9575c85fb0b27
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:285)
+	at org.openqa.selenium.remote.RemoteWebElement.sendKeys(RemoteWebElement.java:106)
+	at Base.commonComponents.clickButton(commonComponents.java:76)
+	at Base.commonComponents.requiredActionToPerform(commonComponents.java:203)
+	at Base.commonComponents.propertyFileReader(commonComponents.java:156)
 	at TestScript.Sample.sampleTest(Sample.java:16)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -51,11 +73,11 @@
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
 ]]>
             </full-stacktrace>
-          </exception> <!-- java.lang.IllegalArgumentException -->
+          </exception> <!-- org.openqa.selenium.ElementNotInteractableException -->
           <reporter-output>
           </reporter-output>
         </test-method> <!-- sampleTest -->
-        <test-method is-config="true" signature="endTest()[pri:0, instance:TestScript.Sample@23c30a20]" started-at="2020-07-31T18:17:15Z" name="endTest" finished-at="2020-07-31T18:17:15Z" duration-ms="234" status="PASS">
+        <test-method is-config="true" signature="endTest()[pri:0, instance:TestScript.Sample@23c30a20]" started-at="2020-08-12T15:46:40Z" name="endTest" finished-at="2020-08-12T15:46:40Z" duration-ms="440" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- endTest -->
