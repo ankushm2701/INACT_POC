@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
@@ -72,10 +73,10 @@ public class commonComponents extends Constants {
     	{
 				switch (locatorType) {
 					case Xpath:
-						waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.Xpath, element, "");
-						driver.findElement(By.xpath(element)).sendKeys(Keys.ENTER);
-						//JavascriptExecutor script=(JavascriptExecutor)driver;
-						//script.executeScript("arguments[0].click();", element);
+						//waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.Xpath, element, "");
+						WebElement element1=driver.findElement(By.xpath(element));
+						JavascriptExecutor script=(JavascriptExecutor)driver;
+						script.executeScript("arguments[0].click();", element1);
 						break;
 					case CssSelector:
 						waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.CssSelector, element, "");
