@@ -18,6 +18,7 @@ public class Constants {
     public static final String InsertText= "inserttext";
     public static final String DropDown= "dropdown";
     public static final String Data= "data";
+    public static final String Clearning = "clearning";
 
     /*enum Actions {
         ACTION,

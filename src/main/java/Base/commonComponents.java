@@ -97,6 +97,29 @@ public class commonComponents extends Constants {
 					break;
 			}
 		}
+    	
+    	public static void clearingFields(LocatorType locatorType, String element)
+    	{
+    		try {
+    			switch (locatorType) {
+					case Xpath:
+					waitUntilCondition(10, EnumActions.ExpectedElementCondition.VisibilityOfElement, LocatorType.Xpath, element, "");
+					driver.findElement(By.xpath(element)).sendKeys(Keys.chord(Keys.CONTROL+ "a"));
+					driver.findElement(By.xpath(element)).sendKeys(Keys.chord(Keys.DELETE));
+					break;
+					case CssSelector:
+					waitUntilCondition(10, EnumActions.ExpectedElementCondition.VisibilityOfElement, LocatorType.CssSelector, element, "");
+					driver.findElement(By.xpath(element)).sendKeys(Keys.chord(Keys.CONTROL+ "a"));
+					driver.findElement(By.xpath(element)).sendKeys(Keys.chord(Keys.DELETE));
+					break;
+				}
+    		}
+    		catch (Exception e) 
+    		{
+    			System.out.println(e);
+    		}
+    	}
+        
         
         public static void insertText(LocatorType locatorType, String element, String value)
     	{
@@ -194,7 +217,7 @@ public class commonComponents extends Constants {
 				String[] data = arrOfStr[i].split("\\|");
 				//value.put(data[0].toLowerCase(),data[1]);
 				value.put(data[0].toLowerCase().trim(), data[1].trim());
-				//logger.log(LogStatus.PASS,"Performing Actions", data[0]+"=="+data[1] );
+				logger.log(LogStatus.PASS,"Performing Actions", data[0]+"=="+data[1] );
 			}
 			if(value.containsKey(URL)) {
 				launchBrowser(value.get(URL));
@@ -220,6 +243,9 @@ public class commonComponents extends Constants {
 						break;
 					case DropDown:
 						clickDropDown(LocatorType.Xpath, xPathvalue);
+						break;
+					case Clearning:
+						clearingFields(LocatorType.Xpath, xPathvalue);
 						break;
 				}
 			}
