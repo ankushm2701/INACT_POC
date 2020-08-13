@@ -7,13 +7,11 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -73,36 +71,21 @@ public class commonComponents extends Constants {
         
         public static void clickButton(LocatorType locatorType, String element)
     	{
-			JavascriptExecutor script=(JavascriptExecutor)driver;
 				switch (locatorType) {
 					case Xpath:
-						waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.Xpath, element, "");
-						script.executeScript("arguments[0].click();", driver.findElement(By.xpath(element)));
+						//waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.Xpath, element, "");
+						WebElement element1=driver.findElement(By.xpath(element));
+						JavascriptExecutor script=(JavascriptExecutor)driver;
+						script.executeScript("arguments[0].click();", element1);
 						break;
 					case CssSelector:
 						waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.CssSelector, element, "");
-						script.executeScript("arguments[0].click();", driver.findElement(By.cssSelector(element)));
+						driver.findElement(By.cssSelector(element)).click();
 						break;
 				}
-    	}
-    	public static  void clickDropDown(LocatorType locatorType, String element)
-		{
-			JavascriptExecutor script=(JavascriptExecutor)driver;
-			Actions action = new Actions(driver);
-			switch (locatorType) {
-				case Xpath:
-					waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.Xpath, element, "");
-					script.executeScript("arguments[0].click();", driver.findElement(By.xpath(element)));
-					action.moveToElement(driver.findElement(By.xpath(element))).click(driver.findElement(By.xpath(element))).build().perform();
-					break;
-				case CssSelector:
-					waitUntilCondition(10, EnumActions.ExpectedElementCondition.ElementToBeClickable, LocatorType.CssSelector, element, "");
-					script.executeScript("arguments[0].click();", driver.findElement(By.xpath(element)));
-					action.moveToElement(driver.findElement(By.xpath(element))).click(driver.findElement(By.xpath(element))).build().perform();
-					break;
-			}
-		}
 
+    	}
+        
         public static void insertText(LocatorType locatorType, String element, String value)
     	{
     		try {
@@ -116,28 +99,6 @@ public class commonComponents extends Constants {
 					waitUntilCondition(10, EnumActions.ExpectedElementCondition.VisibilityOfElement, LocatorType.CssSelector, element, "");
 					driver.findElement(By.cssSelector(element)).clear();
 					driver.findElement(By.cssSelector(element)).sendKeys(value);
-					break;
-				}
-    		}
-    		catch (Exception e) 
-    		{
-    			System.out.println(e);
-    		}
-    	}
-        
-        public static void clearingFields(LocatorType locatorType, String element)
-    	{
-    		try {
-    			switch (locatorType) {
-					case Xpath:
-					waitUntilCondition(10, EnumActions.ExpectedElementCondition.VisibilityOfElement, LocatorType.Xpath, element, "");
-					driver.findElement(By.xpath(element)).sendKeys(Keys.chord(Keys.CONTROL+ "a"));
-					driver.findElement(By.xpath(element)).sendKeys(Keys.chord(Keys.DELETE));
-					break;
-					case CssSelector:
-					waitUntilCondition(10, EnumActions.ExpectedElementCondition.VisibilityOfElement, LocatorType.CssSelector, element, "");
-					driver.findElement(By.xpath(element)).sendKeys(Keys.chord(Keys.CONTROL+ "a"));
-					driver.findElement(By.xpath(element)).sendKeys(Keys.chord(Keys.DELETE));
 					break;
 				}
     		}
@@ -244,12 +205,6 @@ public class commonComponents extends Constants {
 						break;
 					case InsertText:
 						insertText(LocatorType.Xpath, xPathvalue, value.get(Data));
-						break;
-					case DropDown:
-						clickDropDown(LocatorType.Xpath, xPathvalue);
-						break;
-					case Clearning:
-						clearingFields(LocatorType.Xpath, xPathvalue);
 						break;
 				}
 			}
