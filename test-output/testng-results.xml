@@ -2,20 +2,20 @@
 <testng-results total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2020-08-12T11:56:04Z" name="Default suite" finished-at="2020-08-12T11:58:48Z" duration-ms="164933">
+  <suite started-at="2020-08-13T06:00:05Z" name="Default suite" finished-at="2020-08-13T06:02:21Z" duration-ms="136483">
     <groups>
     </groups>
-    <test started-at="2020-08-12T11:56:04Z" name="Default test" finished-at="2020-08-12T11:58:48Z" duration-ms="164933">
+    <test started-at="2020-08-13T06:00:05Z" name="Default test" finished-at="2020-08-13T06:02:21Z" duration-ms="136483">
       <class name="TestScript.Sample">
-        <test-method is-config="true" signature="startTest()[pri:0, instance:TestScript.Sample@23c30a20]" started-at="2020-08-12T17:26:04Z" name="startTest" finished-at="2020-08-12T17:26:04Z" duration-ms="216" status="PASS">
+        <test-method is-config="true" signature="startTest()[pri:0, instance:TestScript.Sample@3cebbb30]" started-at="2020-08-13T11:30:05Z" name="startTest" finished-at="2020-08-13T11:30:05Z" duration-ms="276" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- startTest -->
-        <test-method signature="sampleTest()[pri:0, instance:TestScript.Sample@23c30a20]" started-at="2020-08-12T17:26:04Z" name="sampleTest" finished-at="2020-08-12T17:28:48Z" duration-ms="163949" status="PASS">
+        <test-method signature="sampleTest()[pri:0, instance:TestScript.Sample@3cebbb30]" started-at="2020-08-13T11:30:05Z" name="sampleTest" finished-at="2020-08-13T11:32:21Z" duration-ms="135717" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- sampleTest -->
-        <test-method is-config="true" signature="endTest()[pri:0, instance:TestScript.Sample@23c30a20]" started-at="2020-08-12T17:28:48Z" name="endTest" finished-at="2020-08-12T17:28:48Z" duration-ms="745" status="PASS">
+        <test-method is-config="true" signature="endTest()[pri:0, instance:TestScript.Sample@3cebbb30]" started-at="2020-08-13T11:32:21Z" name="endTest" finished-at="2020-08-13T11:32:21Z" duration-ms="472" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- endTest -->
