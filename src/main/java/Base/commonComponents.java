@@ -217,7 +217,7 @@ public class commonComponents extends Constants {
 				String[] data = arrOfStr[i].split("\\|");
 				//value.put(data[0].toLowerCase(),data[1]);
 				value.put(data[0].toLowerCase().trim(), data[1].trim());
-				logger.log(LogStatus.PASS,"Performing Actions", data[0]+"=="+data[1] );
+				logger.log(LogStatus.PASS,key, data[0]+"="+data[1] );
 			}
 			if(value.containsKey(URL)) {
 				launchBrowser(value.get(URL));
